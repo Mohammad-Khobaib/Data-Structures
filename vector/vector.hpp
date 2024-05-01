@@ -7,7 +7,6 @@
 
 namespace my_stl
 {
-
 template<typename T>
 class vector {
 public:
@@ -46,36 +45,36 @@ private:
         m_capacity = new_capacity;
     }
 public:
-    vector() : m_data(nullptr), m_size(0), m_capacity(0) {}
+    vector<value_type>() : m_data(nullptr), m_size(0), m_capacity(0) {}
     
-    explicit vector(size_type count) : m_data(new value_type[count]{value_type()}), m_size(count), m_capacity(count) {}
+    explicit vector<value_type>(size_type count) : m_data(new value_type[count]{value_type()}), m_size(count), m_capacity(count) {}
     
-    vector(std::initializer_list<value_type>& values) : m_data(new value_type[values.size()]), m_size(values.size()), m_capacity(values.size()) {
+    vector<value_type>(std::initializer_list<value_type>& values) : m_data(new value_type[values.size()]), m_size(values.size()), m_capacity(values.size()) {
         for (size_type i = 0; i < values.size(); i++) {
             m_data[i] = values[i];
         }
     }
     
-    explicit vector(size_type count, const_reference value): m_data(new value_type[count]), m_size(count), m_capacity(count) {
+    explicit vector<value_type>(size_type count, const_reference value): m_data(new value_type[count]), m_size(count), m_capacity(count) {
         for (size_type i = 0; i < m_size; i++) {
             m_data[i] = value;
         }
     }
 
-    vector(const vector<value_type>& right): m_data(nullptr), m_size(right.m_size), m_capacity(right.m_size) {
+    vector<value_type>(const vector<value_type>& right): m_data(nullptr), m_size(right.m_size), m_capacity(right.m_size) {
         m_data = new value_type[right.m_size];
         for (size_type i = 0; i < right.m_size; i++) {
             m_data[i] = right[i];
         }
     }
 
-    vector(vector<value_type>&& right): m_data(right.m_data), m_size(right.m_size), m_capacity(right.m_capacity) {
+    vector<value_type>(vector<value_type>&& right): m_data(right.m_data), m_size(right.m_size), m_capacity(right.m_capacity) {
         right.m_data = nullptr;
         right.m_size = 0;
         right.m_capacity = 0;
     }
 
-    ~vector() {
+    ~vector<value_type>() {
         delete[] m_data;
         m_size = 0;
         m_capacity = 0;
