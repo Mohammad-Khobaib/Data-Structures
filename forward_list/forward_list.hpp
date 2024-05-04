@@ -1,131 +1,310 @@
 #pragma once
 
-#include "node.hpp"
-#include "forward_list_iterator.hpp"
-#include "../initializer_list/initializer_list.hpp"
+#include<initializer_list>
 
+#include "forward_list_node.hpp"
+#include "forward_list_iterator.hpp"
+
+namespace my_stl
+{
 template<typename T>
 class forward_list {
-private:
-    node<T>* head;
+
 public:
     using value_type = T;
-    using iterator = forward_list_iterator<forward_list<T>>;
+    using iterator = forward_list_iterator<forward_list<value_type>>;
+    using node = forward_list_node<value_type>;
+    using size_type = unsigned int;
+    using reference = value_type&;
+    using pointer = value_type*;
+    using difference_type = long int;
+    using const_iterator = const iterator;
+    using const_reference = const value_type&;
+    using const_pointer = const value_type*;
 
-    forward_list() : head(nullptr) {}
+    forward_list<value_type>() : m_head(new node(value_type())) {}
 
-    template<typename... Args>
-    forward_list(Args... args) : head(nullptr) {
-        node<T>* current_node = head;
-        for (const auto it: {args...}) {
-            if (current_node == nullptr) {
-                current_node = new node<T>(it);
-                head = current_node;
-            } else {
-                current_node -> next = new node<T>(it);
-                current_node = current_node -> next;
-            }
-        }
+    forward_list<value_type>(const std::initializer_list<value_type>& values) : m_head(new node(value_type())) {
+        assign(values);
     }
     
-    ~forward_list() {
+    ~forward_list<value_type>() {
         clear();
+        delete m_head;
     }
 
-    void push_front(const T& element) {
-        node<T>* new_node = new node<T>(element);
-        if (head == nullptr) {
-            head = new_node;
-        } else {
-            new_node -> next = head;
-            head = new_node;
-        }
+    void push_front(const value_type& val) {
+        node* new_node = new node(val);
+        node* prev_head = m_head -> next;
+        new_node -> next = prev_head;
+        m_head -> next = new_node;
+    }
+
+    void push_front(T&& val) {
+        node* new_node = new node(val);
+        node* prev_head = m_head -> next;
+        new_node -> next = prev_head;
+        m_head -> next = new_node;
     }
 
     void pop_front() {
-        if (head == nullptr) 
+        if (m_head == nullptr) 
             return;
-        node<T>* deleted_node = head;
-        head = head -> next;
-        delete deleted_node;
+        node* removed_node = m_head;
+        m_head = m_head -> next;
+        delete removed_node;
     }
 
-    void remove(const T& val) {
-        node<T>* current_node = head;
-        node<T>* prev_node = nullptr;
-
-        while (current_node != nullptr) {
-            if (current_node->data == val) {
-                if (prev_node == nullptr) {
-                    pop_front();
-                    prev_node = nullptr;
-                    current_node = head;
-                } else {
-                    prev_node->next = current_node->next;
-                    delete current_node;
-                    current_node = prev_node -> next;
-                }
-            } else {
-                prev_node = current_node;
-                current_node = current_node -> next;
-            }
-        }
-    }
 
     void clear() {
         while (!empty()) {
             pop_front();
         }
     }
-    
+
     void assign(iterator it1, iterator it2) {
         clear();
-        node<T>* current_node = head;
-        for (iterator it = it1; it != it2; ++it) {
-            if (current_node == nullptr) {
-                current_node = new node<T>(*it);
-                head = current_node;
-            } else {
-                current_node -> next = new node<T>(*it);
-                current_node = current_node -> next;
-            }
+        node* tail = m_head;
+        while (it1 != it2) {
+            tail -> next = new node(*it1);
+            tail = tail -> next;
+            ++it1;
         }
     }
 
-    void assign(unsigned int n, const T& val) {
+    void assign(size_type count, const_reference val) {
         clear();
-        for (unsigned int i = 0; i < n; i++) {
+        for (size_type i = 0; i < count; i++) {
             push_front(val);
         }
     }
 
-    void assign(const initializer_list<T>& li) {
+    void assign(const std::initializer_list<value_type>& values) {
         clear();
-        node<T>* current_node = head;
-        for (const T& it : li) {
-            if (current_node == nullptr) {
-                current_node = new node<T>(it);
-                head = current_node;
-            } else {
-                current_node -> next = new node<T>(it);
-                current_node = current_node -> next;
-            }
+        node* tail = m_head;
+        for (const_reference value : values) {
+            tail -> next = new node(value);
+            tail = tail -> next;
         }
     }
 
-    const T& front() {
-        return head -> data;
+    reference front() {
+        return m_head -> next -> data;
+    }
+
+    const_reference front() const {
+        return m_head -> next -> data;
     }
 
     iterator begin() {
-        return iterator(head);
+        return iterator(m_head -> next);
+    }
+
+    const_iterator begin() const {
+        return iterator(m_head -> next);
+    }
+
+    const_iterator before_begin() const {
+        return iterator(m_head);
+    }
+
+    iterator before_begin() {
+        return iterator(m_head);
+    }
+
+    const_iterator cbefore_begin() const {
+        return iterator(m_head);
+    }
+
+    const_iterator cbegin() const {
+        return iterator(m_head -> next);
+    }
+
+    const_iterator cend() const {
+        return iterator(nullptr);
     }
 
     iterator end() {
         return iterator(nullptr);
     }
 
-    bool empty() {
-        return head == nullptr;
+    const_iterator end() const {
+        return iterator(nullptr);
     }
+
+    bool empty() const {
+        return m_head -> next == nullptr;
+    }
+
+    iterator emplace_after(const_iterator position, value_type&& val) {
+        iterator it = iterator(position.m_node);
+        node* temp = it.m_node -> next;
+        it.m_node -> next = new node(val, temp);
+        ++it;
+        return it;
+    }
+
+    void emplace_front(value_type&& val) {
+        push_front(val);
+    }
+
+    iterator erase_after(const_iterator position) {
+        iterator it = iterator(position.m_node);
+        node* removed_node = it.m_node -> next;
+        it.m_node -> next = removed_node -> next;
+        delete removed_node;
+        ++it;
+        return it;
+    }
+
+    iterator erase_after(const_iterator first, const_iterator last) {
+        iterator it_first = iterator(first.m_node);
+        iterator it_last = iterator(last.m_node);
+        node* current_node = it_first.m_node -> next;
+        node* removed_node = current_node;
+        it_first.m_node -> next = it_last.m_node;
+        while (current_node != it_last.m_node) {
+            current_node = current_node -> next;
+            delete removed_node;
+            removed_node = current_node;
+        }
+        return it_last;
+    }
+
+    iterator insert_after(const_iterator position, const_reference val) {
+        return emplace_after(position, (value_type&&) val);
+    }
+
+    void insert_after(const_iterator position, size_type count, const_reference val) {
+        for (size_type i = 0; i < count; i++) {
+            emplace_after(position, (value_type&&) val);
+        }
+    }
+
+    void insert_after(const_iterator position, const std::initializer_list<value_type>& values) {
+        iterator it = iterator(position.m_node);
+        for (const_reference value: values) {
+            it = emplace_after(it, (value_type&&) value);
+        }
+    }
+
+    iterator insert_after(const_iterator position, value_type&& val) {
+        return emplace_after(position, (value_type&&) val);
+    }
+
+    void remove(const_reference val) {
+        node* current_node = m_head;
+        node* removed_node = nullptr;
+        while (current_node -> next != nullptr) {
+            if (current_node -> next -> data == val) {
+                removed_node = current_node -> next;
+                current_node -> next = removed_node -> next;
+                delete removed_node;
+            } else {
+                current_node = current_node -> next;
+            }
+        }
+    }
+
+    template<typename Predicate>
+    void remove_if(Predicate predicate) {
+        node* current_node = m_head;
+        node* removed_node = nullptr;
+        while (current_node -> next != nullptr) {
+            if (predicate(current_node -> next -> data)) {
+                removed_node = current_node -> next;
+                current_node -> next = removed_node -> next;
+                delete removed_node;
+            } else {
+                current_node = current_node -> next;
+            }
+        }
+    } 
+
+    void merge(forward_list<value_type>& right) {
+        node* first = m_head -> next;
+        node* last = right.m_head -> next;
+        node* dummy_node = new node();
+        node* current_node = dummy_node;
+        while (first != nullptr && last != nullptr) {
+            if (first -> data < last -> data) {
+                current_node -> next = first;
+                current_node = first;
+                first = first -> next;
+            } else {
+                current_node -> next = last;
+                current_node = last;
+                last = last -> next;
+            }
+        }
+        if (first == nullptr)
+            current_node -> next = last;
+        else 
+            current_node -> next = first;
+        m_head -> next = dummy_node -> next;
+        right.m_head -> next = nullptr;
+        delete dummy_node;
+    }
+
+    template<typename Predicate>
+    void merge(forward_list<value_type>& right, Predicate compare) {
+        node* first = m_head -> next;
+        node* last = right.m_head -> next;
+        node* dummy_node = new node();
+        node* current_node = dummy_node;
+        while (first != nullptr && last != nullptr) {
+            if (compare(last -> data, first -> data)) {
+                current_node -> next = first;
+                current_node = first;
+                first = first -> next;
+            } else {
+                current_node -> next = last;
+                current_node = last;
+                last = last -> next;
+            }
+        }
+        if (first == nullptr)
+            current_node -> next = last;
+        else 
+            current_node -> next = first;
+        m_head -> next = dummy_node -> next;
+        right.m_head -> next = nullptr;
+        delete dummy_node;
+    }
+
+    void resize(size_type new_size, const_reference val = value_type()) {
+        size_type i = 0;
+        node* current_node = m_head;
+        while (i < new_size && current_node -> next != nullptr) {
+            i++;
+            current_node = current_node -> next;
+        }
+        if (current_node != nullptr) {
+            const_iterator first = iterator(current_node);
+            const_iterator last = end();
+            erase_after(first, last);
+        }
+        if (i < new_size) {
+            for (int j = i; j < new_size; j++) {
+                current_node -> next = new node(val);
+                current_node = current_node -> next;
+            }
+        }
+    }
+
+    void reverse() {
+        node* prev = nullptr;
+        node* current_node = m_head -> next;
+        node* next = current_node;
+        while (current_node != nullptr) {
+            next = current_node -> next;
+            current_node -> next = prev;
+            prev = current_node;
+            current_node = next;
+        }
+        m_head -> next = prev;
+    }
+private:
+    node* m_head;
 };
+}
