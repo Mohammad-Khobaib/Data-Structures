@@ -4,31 +4,59 @@ Welcome to the Stack Class Documentation!
 
 ## Overview
 
-The `stack` class template represents a last-in, first-out (LIFO) data structure in C++. It provides operations for pushing elements onto the stack, popping elements from the top of the stack, accessing the top element without removal, and checking the size and emptiness of the stack.
+The `stack` class template represents a basic stack data structure in C++. It provides a way to store elements in a last-in, first-out (LIFO) manner, where elements are added and removed from the top of the stack.
 
 ## Features
 
-- **Push Operation**: Adds an element to the top of the stack.
-- **Pop Operation**: Removes the top element from the stack.
-- **Top Operation**: Returns a reference to the top element without removal.
-- **Size and Empty Check**: Provides methods to check the size and emptiness of the stack.
+- **Simple Interface**: The stack class provides a simple interface for pushing, popping, and accessing elements.
+- **Efficiency**: Operations like push, pop, and access to the top element are efficient with constant time complexity.
+- **Customizable Element Type**: The element type of the stack is customizable using a template parameter.
 
 ## Methods
 
 ### Constructors
 
-- **Default Constructor**: Initializes an empty stack.
+- **Default Constructor**:
+  - Initializes an empty stack.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
 ### Element Manipulation
 
-- **push(const T& element)**: Adds an element to the top of the stack.
-- **pop()**: Removes the top element from the stack.
-- **top()**: Returns a reference to the top element without removal.
+- **push(const T& val)**:
+  - Pushes the given element onto the top of the stack.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-### Size and Empty Check
+- **pop()**:
+  - Removes the top element from the stack.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **size() const**: Returns the number of elements in the stack.
-- **empty() const**: Checks if the stack is empty.
+### Element Access
+
+- **top()**:
+  - Returns a reference to the top element of the stack without removing it.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+### Size and Status
+
+- **size()**:
+  - Returns the number of elements in the stack.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **empty()**:
+  - Checks if the stack is empty.
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
 ## Usage
 
@@ -37,23 +65,24 @@ The `stack` class template represents a last-in, first-out (LIFO) data structure
 
 int main() {
     // Creating a stack of integers
-    stack<int> myStack;
+    my_stl::stack<int> my_stack;
 
-    // Adding elements to the stack
-    myStack.push(10);
-    myStack.push(20);
-    myStack.push(30);
+    // Pushing elements onto the stack
+    my_stack.push(10);
+    my_stack.push(20);
+    my_stack.push(30);
 
-    // Accessing and printing top element
-    std::cout << "Top element: " << myStack.top() << std::endl;
+    // Popping an element from the stack
+    my_stack.pop();
 
-    // Popping elements from the stack
-    myStack.pop();
-    myStack.pop();
+    // Accessing the top element
+    int top_element = my_stack.top();
 
-    // Checking stack size and emptiness
-    std::cout << "Stack size: " << myStack.size() << std::endl;
-    std::cout << "Is the stack empty? " << (myStack.empty() ? "Yes" : "No") << std::endl;
+    // Checking the size of the stack
+    if (!my_stack.empty()) {
+        int stack_size = my_stack.size();
+    }
 
     return 0;
 }
+```
