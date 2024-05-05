@@ -1,28 +1,44 @@
 #pragma once
 
-#include "../list/list.hpp"
+#include "../forward_list/forward_list.hpp"
 
+namespace my_stl
+{
 template<typename T>
 class stack {
-private:
-    list<T> m_list;
 public:
-    void push(const T& element) {
-        m_list.push_back(element);
+    using value_type = T;
+    using reference = value_type&;
+    using const_reference = const value_type&;
+    using size_type = unsigned int;
+private:
+    forward_list<T> m_forward_list;
+    size_type m_size;
+public:
+    stack() : m_forward_list(), m_size(0) {}
+    
+    void push(const_reference val) {
+        m_forward_list.push_front(val);
+        m_size++;
     }
+
     void pop() {
-        if (!m_list.empty())
-            m_list.pop_back();
+        if (!m_forward_list.empty()) {
+            m_forward_list.pop_front();
+            m_size--;
+        }
     }
-    const T& top() {
-        if (!m_list.empty())
-            return m_list.back();
-        throw T();
+
+    const_reference top() {
+        return m_forward_list.front();
     }
-    unsigned int size() const {
-        return m_list.size();
+
+    size_type size() const {
+        return m_size;
     }
+
     bool empty() const {
-        return m_list.empty();
+        return m_forward_list.empty();
     }
 };
+}
