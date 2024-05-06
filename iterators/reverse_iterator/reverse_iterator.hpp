@@ -13,7 +13,7 @@ public:
     using reference = typename iterator_traits<Iterator>::reference;
     using value_type = typename iterator_traits<Iterator>::value_type;
 
-    reverse_iterator<Iterator>(iterator_type iterator) : m_iterator(iterator) {}
+    reverse_iterator<Iterator>(const iterator_type& iterator) : m_iterator(iterator) {}
     
     reverse_iterator<Iterator>(const reverse_iterator<Iterator>& right): m_iterator(right.m_iterator) {}
 
@@ -21,7 +21,7 @@ public:
         return m_iterator;
     }
 
-    reference operator*() const {
+    reference operator*() {
         return *m_iterator;
     }
 
@@ -33,7 +33,7 @@ public:
         m_iterator--;
         return *this;
     }
-
+    
     reverse_iterator<Iterator> operator++(int) {
         reverse_iterator<Iterator> it = *this;
         ++(*this);
@@ -73,7 +73,7 @@ public:
         return &(*m_iterator);
     }
 
-    bool operator!=(const reverse_iterator<Iterator>& right) {
+    bool operator!=(const reverse_iterator<Iterator>& right) const {
         return m_iterator != right.m_iterator;
     }
 private:
