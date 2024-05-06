@@ -4,73 +4,240 @@ Welcome to the List Class Documentation!
 
 ## Overview
 
-The `list` class template represents a doubly linked list in C++. It offers a versatile way to store and manage a sequence of elements of a specified type, with efficient insertion, deletion, and traversal capabilities.
+The `list` class template represents a doubly linked list in C++. It provides dynamic size, efficient insertion and deletion operations, and bidirectional iterators for traversal.
 
 ## Features
 
-- **Doubly Linked Structure**: Utilizes a doubly linked structure for efficient insertion and deletion operations at both ends and in the middle of the list.
-- **Dynamic Sizing**: The list dynamically adjusts its size as elements are added or removed.
-- **Iterator Support**: Provides support for iterators to traverse the elements of the list efficiently.
-- **Type Safety**: Ensures type safety by using template parameters to specify the type of elements stored in the list.
+- **Dynamic Size**: Elements can be added or removed dynamically.
+- **Efficient Insertion/Deletion**: Operations like `push_back`, `push_front`, `pop_back`, and `pop_front` are efficient.
+- **Bidirectional Iterators**: Supports bidirectional iterators for traversal.
+- **Initializer List Constructor**: Can be initialized using an initializer list.
 
-## Methods
+## Constructors
 
-### Constructors
+- **Default Constructor**:
+  - Initializes an empty list.
+  - `list<value_type>()`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **Default Constructor**: Initializes an empty list.
-- **Variadic Constructor**: Initializes the list with the provided arguments.
+- **Initializer List Constructor**:
+  - Initializes the list with elements from an initializer list.
+  - `list<value_type>(const std::initializer_list<value_type>& values)`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(N)
+  - **Auxiliary Space Complexity**: O(N)
 
-### Element Manipulation
+## Modifiers
 
-- **push_back()**: Adds an element to the end of the list.
-- **push_front()**: Adds an element to the beginning of the list.
-- **pop_back()**: Removes the last element from the list.
-- **pop_front()**: Removes the first element from the list.
-- **insert()**: Inserts multiple elements at a specified position in the list.
+- **push_back()**:
+  - Adds an element to the end of the list.
+  - `void push_back(const_reference val)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-### Size and Empty Check
+- **push_front()**:
+  - Adds an element to the front of the list.
+  - `void push_front(const_reference val)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **size()**: Returns the number of elements in the list.
-- **empty()**: Checks if the list is empty.
+- **pop_back()**:
+  - Removes the last element from the list.
+  - `void pop_back()`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-### Accessors
+- **pop_front()**:
+  - Removes the first element from the list.
+  - `void pop_front()`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **front()**: Returns a reference to the first element in the list.
-- **back()**: Returns a reference to the last element in the list.
+- **emplace_back()**:
+  - Constructs an element in-place at the end of the list.
+  - `void emplace_back(value_type&& val)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-### Iterators
+- **emplace_front()**:
+  - Constructs an element in-place at the front of the list.
+  - `void emplace_front(value_type&& val)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **begin()**: Returns an iterator to the beginning of the list.
-- **end()**: Returns an iterator to one past the end of the list.
+- **clear()**:
+  - Removes all elements from the list.
+  - `void clear()`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-### Clearing the List
+- **emplace()**:
+  - Constructs an element in-place at the specified position.
+  - `iterator emplace(iterator position, value_type&& val)`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
-- **clear()**: Removes all elements from the list.
+- **erase()**:
+  - Removes the element at the specified position.
+  - `iterator erase(iterator& position)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **insert()**:
+  - Inserts an element at the specified position.
+  - `iterator insert(iterator position, const_reference val)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **merge()**:
+  - Merges another list into this list.
+  - `void merge(const list<value_type>& right)`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **remove()**:
+  - Removes all elements equal to the specified value.
+  - `void remove(const_reference val)`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **remove_if()**:
+  - Removes all elements for which the predicate returns true.
+  - `template<typename Predicate> void remove_if(Predicate compare)`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **resize()**:
+  - Changes the size of the list to the specified size.
+  - `void resize(size_type new_size, const_reference val = value_type())`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **sort()**:
+  - Sorts the elements of the list.
+  - `void sort()`
+  - **Time Complexity**: O(N log N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **reverse()**:
+  - Reverses the order of the elements in the list.
+  - `void reverse()`
+  - **Time Complexity**: O(N)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **splice()**:
+  - Transfers elements from another list into this list.
+  - `void splice(const_iterator position, list<value_type>& source)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **swap()**:
+  - Swaps the contents of this list with another list.
+  - `void swap(list<value_type>& right)`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **size()**:
+  - Returns the number of elements in the list.
+  - `size_type size() const`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **empty()**:
+  - Checks if the list is empty.
+  - `bool empty() const`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **begin()** and **end()**:
+  - Returns iterators to the beginning and end of the list.
+  - `iterator begin()`, `iterator end()`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **cbegin()** and **cend()**:
+  - Returns constant iterators to the beginning and end of the list.
+  - `const_iterator cbegin() const`, `const_iterator cend() const`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **rbegin()** and **rend()**:
+  - Returns reverse iterators to the reverse beginning and end of the list.
+  - `reverse_iterator rbegin()`, `reverse_iterator rend()`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
+
+- **crbegin()** and **crend()**:
+  - Returns constant reverse iterators to the reverse beginning and end of the list.
+  - `const_reverse_iterator crbegin() const`, `const_reverse_iterator crend() const`
+  - **Time Complexity**: O(1)
+  - **Space Complexity**: O(1)
+  - **Auxiliary Space Complexity**: O(1)
 
 ## Usage
 
 ```cpp
+#include <iostream>
 #include "list.hpp"
 
 int main() {
-    // Creating a list of integers
-    list<int> myList;
+    // Creating an empty list of integers
+    my_stl::list<int> my_list;
 
-    // Adding elements to the list
-    myList.push_back(1);
-    myList.push_back(2);
-    myList.push_back(3);
+    // Pushing elements to the list
+    my_list.push_back(10);
+    my_list.push_back(20);
+    my_list.push_back(30);
 
-    // Accessing elements of the list
-    std::cout << "List elements:";
-    for (auto it = myList.begin(); it != myList.end(); ++it) {
-        std::cout << " " << *it;
+    // Printing list elements
+    std::cout << "List elements: ";
+    for (auto& elem : my_list) {
+        std::cout << elem << " ";
     }
     std::cout << std::endl;
 
-    // Checking list size and emptiness
-    std::cout << "List size: " << myList.size() << std::endl;
-    std::cout << "Is the list empty? " << (myList.empty() ? "Yes" : "No") << std::endl;
+    // Checking list size
+    std::cout << "List size: " << my_list.size() << std::endl;
+
+    // Accessing elements
+    std::cout << "First element: " << my_list.front() << std::endl;
+    std::cout << "Last element: " << my_list.back() << std::endl;
+
+    // Removing elements
+    my_list.pop_front(); // Remove first element
+    my_list.pop_back();  // Remove last element
+
+    // Printing modified list
+    std::cout << "Modified list: ";
+    for (auto& elem : my_list) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
