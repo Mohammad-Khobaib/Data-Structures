@@ -1,8 +1,8 @@
-#include "string.hpp" // Include your string class header file
-
 #include <iostream>
 #include <cassert>
 #include <cstring>
+
+#include "string.hpp" 
 
 void test_default_constructor() {
     my_stl::string str;
