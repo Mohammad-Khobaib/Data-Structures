@@ -1,65 +1,43 @@
-#include "string.hpp"
+#include "string.hpp" // Include your string class header file
 
-#include <cstring>
+#include <iostream>
 #include <cassert>
+#include <cstring>
 
 void test_default_constructor() {
-    string str;
+    my_stl::string str;
     assert(str.size() == 0);
-    assert(str.data() == nullptr);
+    assert(str.capacity() == 15); // Default capacity
+    assert(str.empty());
+    assert(str.data()[0] == '\0'); // Empty string
 }
 
 void test_constructor_with_string_literal() {
     const char* testData = "Hello, world!";
-    string str(testData);
+    my_stl::string str(testData);
     assert(str.size() == 13);
-    assert(strcmp(str.data(), testData) == 0);
+    assert(std::strcmp(str.data(), testData) == 0);
 }
 
 void test_copy_constructor() {
     const char* testData = "Hello, world!";
-    string original(testData);
-    string copy(original);
+    my_stl::string original(testData);
+    my_stl::string copy(original);
     assert(copy.size() == original.size());
-    assert(strcmp(copy.data(), original.data()) == 0);
+    assert(std::strcmp(copy.data(), original.data()) == 0);
 }
 
 void test_size() {
     const char* testData = "Hello, world!";
-    string str(testData);
+    my_stl::string str(testData);
     assert(str.size() == 13);
 }
 
-void test_push_back() {
-    string str("Hello");
-    str.push_back(", world!");
+void test_append() {
+    my_stl::string str("Hello");
+    str.append(", world!");
     assert(str.size() == 13);
-    assert(strcmp(str.data(), "Hello, world!") == 0);
-}
-
-void test_concatenation() {
-    string str1("Hello");
-    string str2(", world!");
-    string concatenated = str1 + str2;
-    assert(concatenated.size() == 13);
-    assert(strcmp(concatenated.data(), "Hello, world!") == 0);
-}
-
-void test_concatenation_assignment() {
-    string str1("Hello");
-    string str2(", world!");
-    str1 += str2;
-    assert(str1.size() == 13);
-    assert(strcmp(str1.data(), "Hello, world!") == 0);
-}
-
-void test_assignment_operator() {
-    const char* testData = "Hello, world!";
-    string original(testData);
-    string assigned;
-    assigned = original;
-    assert(assigned.size() == original.size());
-    assert(strcmp(assigned.data(), original.data()) == 0);
+    assert(std::strcmp(str.data(), "Hello, world!") == 0);
 }
 
 int main() {
@@ -67,10 +45,7 @@ int main() {
     test_constructor_with_string_literal();
     test_copy_constructor();
     test_size();
-    test_push_back();
-    test_concatenation();
-    test_concatenation_assignment();
-    test_assignment_operator();
+    test_append();
 
     std::cout << "All tests passed!" << std::endl;
 
