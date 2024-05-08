@@ -1,8 +1,6 @@
 #include<iostream>
 #include <cassert>
 
-#include <forward_list>
-
 #include "forward_list.hpp" // Include the header file where forward_list implementation is defined.
 #include "../utility/move.hpp" // Include the header file where move function implementation is defined.
 #include "../utility/distance.hpp" // Include the header file where distance function implementation is defined.
