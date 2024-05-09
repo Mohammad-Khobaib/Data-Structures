@@ -24,7 +24,7 @@ To get started, follow these steps:
 
 1. Clone this repository to your local machine:
    ```
-   git clone <repository-url>
+   git clone https://github.com/Mohammad-Khobaib/Data-Structures.git
    ```
 
 2. Navigate to the directory containing the implementation of the data structure you want to work with. For example, if you want to work with the `array` data structure, change your directory to the `array` directory:
