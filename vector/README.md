@@ -1,173 +1,97 @@
-# Vector Class Documentation
+# vector Class Documentation
 
 Welcome to the Vector Class Documentation!
 
 ## Overview
 
-The `vector` class template represents a dynamic array in C++. It provides a versatile way to store and manipulate elements of a specified type with dynamic memory allocation.
+The `vector` class template provides a dynamic array implementation in C++, allowing efficient insertion, deletion, and access of elements. It is similar to `std::vector` in the C++ Standard Library.
 
 ## Features
 
-- **Dynamic Size**: The size of the vector can grow or shrink dynamically during runtime.
-- **Efficient Access**: Elements of the vector can be efficiently accessed using the subscript operator (`[]`) or iterators.
-- **Memory Management**: The vector dynamically manages memory for its elements, ensuring efficient memory usage.
+- **Dynamic Array**: The `vector` class represents a dynamic array where elements can be efficiently added or removed at the end of the array.
+- **Random Access**: Elements of the vector can be efficiently accessed using the subscript operator (`[]`) or iterators.
+- **Iterator Support**: The class provides iterator support, allowing traversal and manipulation of vector elements.
+- **Efficient Resizing**: The vector automatically adjusts its capacity to accommodate new elements, ensuring efficient memory usage.
+- **Move Semantics**: Supports move semantics, allowing efficient transfer of resources between vectors.
 
 ## Methods
 
 ### Constructors
 
-- **Default Constructor**:
-  - Initializes an empty vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **Size Constructor**:
-  - Initializes the vector with a specified number of elements, all initialized to their default values.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(N)
-
-- **Value Constructor**:
-  - Initializes the vector with a specified number of elements, all initialized to a specified value.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(N)
-
-- **Copy Constructor**:
-  - Initializes the vector with the contents of another vector.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(N)
-
-- **Move Constructor**:
-  - Initializes the vector by moving the contents of another vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
+- **Default Constructor**: Initializes an empty vector.
+- **Initializer List Constructor**: Initializes the vector with the elements from the provided initializer list.
+- **Size Constructor**: Initializes the vector with a specified size, optionally initializing elements with a default value.
+- **Copy Constructor**: Initializes the vector with a copy of another vector.
+- **Move Constructor**: Initializes the vector by moving resources from another vector.
 
 ### Element Access
 
-- **Operator[]**:
-  - Allows accessing elements of the vector using the subscript operator.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
+- **Operator[]**: Allows accessing elements of the vector using the subscript operator.
+- **at()**: Returns a reference to the element at the specified position, with bounds checking.
+- **front()**: Returns a reference to the first element in the vector.
+- **back()**: Returns a reference to the last element in the vector.
+- **data()**: Returns a pointer to the underlying array.
+- **begin()** and **end()**: Return iterators to the beginning and end of the vector.
+- **cbegin()** and **cend()**: Return constant iterators to the beginning and end of the vector.
+- **rbegin()** and **rend()**: Return reverse iterators to the reverse beginning and reverse end of the vector.
+- **crbegin()** and **crend()**: Return constant reverse iterators to the reverse beginning and reverse end of the vector.
 
-- **at()**:
-  - Returns a reference to the element at the specified position, with bounds checking.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
+### Capacity
 
-- **front()** and **back()**:
-  - Return references to the first and last elements of the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **data()**:
-  - Returns a pointer to the underlying array.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **begin()**, **end()**, **cbegin()**, **cend()**, **rbegin()**, **rend()**, **crbegin()**, **crend()**:
-  - Return iterators for traversing the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-### Size and Capacity
-
-- **size()**:
-  - Returns the number of elements in the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **capacity()**:
-  - Returns the current capacity of the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **max_size()**:
-  - Returns the maximum possible size of the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
+- **size()**: Returns the number of elements in the vector.
+- **capacity()**: Returns the current capacity of the vector.
+- **empty()**: Checks whether the vector is empty.
+- **reserve()**: Reserves memory to accommodate a specified number of elements without reallocation.
+- **resize()**: Changes the size of the vector to the specified new size.
 
 ### Modifiers
 
-- **clear()**:
-  - Removes all elements from the vector.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
+- **clear()**: Clears all elements from the vector, making it empty.
+- **push_back()**: Adds a copy of the specified value to the end of the vector.
+- **emplace_back()**: Constructs an element in-place at the end of the vector.
+- **pop_back()**: Removes the last element from the vector.
+- **emplace()**: Constructs an element in-place at the specified position in the vector.
+- **erase()**: Erases elements from the vector.
+- **swap()**: Exchanges the contents of the vector with another vector.
+- **assign()**: Assigns new contents to the vector.
 
-- **emplace()**:
-  - Inserts a new element at the specified position.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
+### Comparison Operators
 
-- **emplace_back()**:
-  - Inserts a new element at the end of the vector.
-  - **Time Complexity**: O(1) amortized
-  - **Space Complexity**: O(1) amortized
-
-- **push_back()**:
-  - Appends a new element to the end of the vector.
-  - **Time Complexity**: O(1) amortized
-  - **Space Complexity**: O(1) amortized
-
-- **pop_back()**:
-  - Removes the last element from the vector.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **erase()**:
-  - Removes the element at the specified position or a range of elements.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
-
-- **resize()**:
-  - Changes the size of the vector.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
-
-- **reserve()**:
-  - Requests that the vector capacity be at least enough to contain a specified number of elements.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
-
-- **shrink_to_fit()**:
-  - Reduces the capacity of the vector to fit its size.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
-
-- **swap()**:
-  - Exchanges the contents of two vectors.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-### Miscellaneous
-
-- **empty()**:
-  - Checks whether the vector is empty.
-  - **Time Complexity**: O(1)
-  - **Space Complexity**: O(1)
-
-- **operator=()**:
-  - Assigns the contents of another vector to this vector.
-  - **Time Complexity**: O(N)
-  - **Space Complexity**: O(1)
+- **operator==()**: Checks if this vector is equal to another vector.
+- **operator!=()**: Checks if this vector is not equal to another vector.
+- **operator<()**: Checks if this vector is less than another vector.
+- **operator<=()**: Checks if this vector is less than or equal to another vector.
+- **operator>()**: Checks if this vector is greater than another vector.
+- **operator>=()**: Checks if this vector is greater than or equal to another vector.
 
 ## Usage
 
 ```cpp
+#include<iostream>
+
 #include "vector.hpp"
 
 int main() {
-    // Create a vector of integers
-    my_stl::vector<int> vec;
+    // Creating a vector of integers
+    my_stl::vector<int> vec {1, 2, 3, 4, 5};
 
-    // Add elements to the vector
-    vec.push_back(1);
-    vec.push_back(2);
-    vec.push_back(3);
+    // Accessing elements using subscript operator
+    std::cout << "Element at index 2: " << vec[2] << std::endl;
 
-    // Iterate over the vector and print elements
-    for (auto& elem : vec) {
-        std::cout << elem << " ";
+    // Adding elements to the vector
+    vec.push_back(6);
+    vec.emplace_back(7);
+
+    // Iterating over the vector
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        std::cout << *it << " ";
     }
     std::cout << std::endl;
+
+    // Checking if the vector is empty
+    if (!vec.empty()) {
+        std::cout << "Vector is not empty." << std::endl;
+    }
 
     return 0;
 }
