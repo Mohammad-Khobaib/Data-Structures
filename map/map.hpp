@@ -1,32 +1,72 @@
-#include <iostream>
-#include <cassert>
+#pragma once
 
-int main() {
-    // Create an instance of your map
-    map<int, std::string> myMap;
+#include<initializer_list>
 
-    // Insert some key-value pairs
-    myMap.insert(1, "One");
-    myMap.insert(2, "Two");
-    myMap.insert(3, "Three");
+#include "../trees/red_black_tree/red_black_tree_iterator.hpp"
+#include "../trees/red_black_tree/red_black_tree.hpp"
+#include "../pair/pair.hpp"
+#include "map_node.hpp"
 
-    // Verify insertion
-    assert(myMap[1] == "One");
-    assert(myMap[2] == "Two");
-    assert(myMap[3] == "Three");
+namespace my_stl
+{
+template<typename KeyType, typename ValueType>
+class map {
+public:
+    using node = map_node<KeyType, ValueType>;
+    using value_type = pair<KeyType, ValueType>;
+    using size_type = unsigned int;
+    using iterator = typename red_black_tree<node>::iterator;
+    using const_iterator = typename red_black_tree<node>::const_iterator;
 
-    // Erase a key-value pair
-    myMap.erase(2);
+    map<KeyType, ValueType>() {}
 
-    // Verify deletion
-    assert(myMap[2] == ""); // Assuming VALUE_TYPE is string, so default-constructed value is an empty string
+    map<KeyType, ValueType>(const std::initializer_list<value_type>& values) {
+        insert(values);
+    }
 
-    // Try to access a non-existent key
-    // This should throw an assertion failure
-    // Uncomment the line below to see the assertion failure
-    // assert(myMap[2] == "Two");
+    void insert(const value_type& val) {
+        m_red_black_tree.insert_node(node(val.first, val.second));
+    }
 
-    std::cout << "All assertions passed!\n";
+    void insert(const std::initializer_list<value_type>& values) {
+        for (const value_type& val: values) {
+            insert(val);
+        }
+    }
+    
+    void erase(const KeyType& key) {
+        m_red_black_tree.delete_node(node(key));
+    }
 
-    return 0;
-}
+    size_type size() const {
+        return m_red_black_tree.size();
+    }
+
+    iterator begin() {
+        return m_red_black_tree.begin();
+    }
+
+    const_iterator begin() const {
+        return m_red_black_tree.begin();
+    }
+
+    iterator end() {
+        return m_red_black_tree.end();
+    }
+
+    const_iterator end() const {
+        return m_red_black_tree.end();
+    }
+
+    ValueType& operator[](const KeyType& key) {
+        try {
+            node& temp = m_red_black_tree.search_node(node(key));
+            return temp.m_value;
+        } catch (const runtime_error& err) {
+            throw runtime_error("Key not found");
+        }
+    }
+private:
+    red_black_tree<node> m_red_black_tree;
+};
+} // namespace my_stl
