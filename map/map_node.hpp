@@ -1,32 +1,47 @@
-#include <iostream>
-#include <cassert>
+#pragma once
 
-int main() {
-    // Create an instance of your map
-    map<int, std::string> myMap;
+namespace my_stl
+{
+template<typename KeyType, typename ValueType>
+class map;
 
-    // Insert some key-value pairs
-    myMap.insert(1, "One");
-    myMap.insert(2, "Two");
-    myMap.insert(3, "Three");
+template<typename KeyType, typename ValueType>
+class map_node {
+public:
+    map_node<KeyType, ValueType>(const KeyType& key, const ValueType& value) :
+        m_key(key),
+        m_value(value)
+    {}
 
-    // Verify insertion
-    assert(myMap[1] == "One");
-    assert(myMap[2] == "Two");
-    assert(myMap[3] == "Three");
+    map_node<KeyType, ValueType>(const KeyType& key) :
+        m_key(key),
+        m_value(ValueType())
+    {}
 
-    // Erase a key-value pair
-    myMap.erase(2);
+    bool operator>(const map_node<KeyType, ValueType>& right) const {
+        return m_key > right.m_key;
+    }
 
-    // Verify deletion
-    assert(myMap[2] == ""); // Assuming VALUE_TYPE is string, so default-constructed value is an empty string
+    bool operator>=(const map_node<KeyType, ValueType>& right) const {
+        return m_key >= right.m_key;
+    }
 
-    // Try to access a non-existent key
-    // This should throw an assertion failure
-    // Uncomment the line below to see the assertion failure
-    // assert(myMap[2] == "Two");
+    bool operator<(const map_node<KeyType, ValueType>& right) const {
+        return m_key < right.m_key;
+    }
 
-    std::cout << "All assertions passed!\n";
+    bool operator<=(const map_node<KeyType, ValueType>& right) const {
+        return m_key <= right.m_key;
+    }
 
-    return 0;
-}
+    bool operator==(const map_node<KeyType, ValueType>& right) const {
+        return m_key == right.m_key;
+    }
+    bool operator!=(const map_node<KeyType, ValueType>& right) const {
+        return m_key != right.m_key;
+    }
+public:
+    KeyType m_key;
+    ValueType m_value;
+};
+} // namespace my_stl
